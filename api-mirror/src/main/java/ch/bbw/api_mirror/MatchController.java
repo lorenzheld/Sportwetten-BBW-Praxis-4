@@ -1,9 +1,11 @@
 package ch.bbw.api_mirror;
 
-import ch.bbw.api_mirror.MatchService;
+
 import ch.bbw.api_mirror.model.Match;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -11,22 +13,23 @@ import java.util.List;
 @RequestMapping("/api/matches")
 public class MatchController {
 
-    @Autowired
-    private MatchService matchService;
+    private final ch.bbw.api_mirror.MatchService matchService;
 
-    @PostMapping("/sync")
-    public String syncMatches() {
-        matchService.syncMatches();
-        return "Matches synced successfully!";
+    @Autowired
+    public MatchController(ch.bbw.api_mirror.MatchService matchService) {
+        this.matchService = matchService;
     }
+
 
     @GetMapping("/bundesliga")
     public List<Match> getBundesligaMatches() {
-        return matchService.getMatches("Bundesliga", "SCHEDULED");
+        return matchService.getMatches("BL1", "SCHEDULED");
     }
 
     @GetMapping("/bundesliga/live")
     public List<Match> getLiveMatches() {
-        return matchService.getMatches("Bundesliga", "LIVE");
+        return matchService.getMatches("BL1", "LIVE");
     }
+
 }
+
