@@ -1,12 +1,9 @@
-package ch.bbw.users;
+package ch.bbw.user;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="users")
@@ -14,14 +11,14 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String username;
     private String password;
     private int balance;
-    private User(long id, String username, String hashCode, int balance) {
+    private User(long id, String username, String password, int balance) {
         this.id = id;
         this.username = username;
-        this.password = hashCode;
+        this.password = password;
         this.balance = balance;
     }
 }

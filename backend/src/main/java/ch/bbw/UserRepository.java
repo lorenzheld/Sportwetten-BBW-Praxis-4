@@ -1,7 +1,7 @@
-package ch.bbw.users;
+package ch.bbw;
 
+import ch.bbw.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ch.bbw.users.User;
 
 import java.util.Optional;
 
