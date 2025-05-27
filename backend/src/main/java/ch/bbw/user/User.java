@@ -15,6 +15,7 @@ public class User {
     private String username;
     private String password;
     private int balance;
+
     private User(long id, String username, String password, int balance) {
         this.id = id;
         this.username = username;
