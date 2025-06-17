@@ -2,24 +2,30 @@ package ch.bbw.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name="users")
-
 public class User {
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id;
     private String username;
     private String password;
     private int balance;
-
-    private User(long id, String username, String password, int balance) {
-        this.id = id;
+    private List<UUID> bets;
+    private User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.balance = balance;
     }
 }

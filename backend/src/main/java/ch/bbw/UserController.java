@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/users")
@@ -19,7 +20,11 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getUsers();
     }
-    @PostMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> getUser(@PathVariable UUID id) {
+        return userService.getUser(id);
+    }
+    @PostMapping("/register")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
