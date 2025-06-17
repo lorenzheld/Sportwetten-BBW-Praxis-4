@@ -1,10 +1,13 @@
 package ch.bbw;
 
 import ch.bbw.bets.Bets;
+import ch.bbw.external.GameResult;
 import ch.bbw.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,22 +18,69 @@ public class BetService {
     private BetsRepository betsRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
+    @Value("${API_KEY}")
+    private String apiKey;
     public ResponseEntity<List<Map<String, Object>>> getBetsByUser(UUID userId) {
         if (userId == null) {
             throw new IllegalArgumentException("User ID muss angegeben werden");
         }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User nicht gefunden"));
+
         List<Bets> bets = betsRepository.findByUserId(userId);
-        if (bets.isEmpty()) {
-            return ResponseEntity.notFound().build();
+        List<Bets> stillOpen = new ArrayList<>();
+
+        for (Bets bet : bets) {
+            String url = String.format(
+                    "https://api.football-data.org/v4/matches/%d",
+                    bet.getGameId()
+            );
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Auth-Token", apiKey);
+            HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<GameResult> response = restTemplate.exchange(
+                    url, HttpMethod.GET, entity, GameResult.class
+            );
+            GameResult result = response.getBody();
+            if (result == null) {
+                stillOpen.add(bet);
+                continue;
+            }
+
+            if ("FINISHED".equalsIgnoreCase(result.getStatus())) {
+                boolean homeWon = result.getHomeScore() > result.getAwayScore();
+                boolean userGuessedHome = bet.isHomeBet();
+
+                if ((homeWon && userGuessedHome) || (!homeWon && !userGuessedHome)) {
+                    int payout = bet.getBetAmount() * 2;
+                    user.setBalance(user.getBalance() + payout);
+                }
+                betsRepository.delete(bet);
+            } else {
+                stillOpen.add(bet);
+            }
         }
-        List<Map<String, Object>> result = bets.stream()
+
+        userRepository.save(user);
+
+        List<Map<String, Object>> resultList = stillOpen.stream()
                 .map(b -> Map.<String, Object>of(
                         "gameId",    b.getGameId(),
-                        "betAmount", b.getBetAmount()
+                        "betAmount", b.getBetAmount(),
+                        "homeBet",   b.isHomeBet()
                 ))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(result);
+
+        if (resultList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(resultList);
     }
 
     public Bets saveBet(Bets bet) {
@@ -51,12 +101,9 @@ public class BetService {
             throw new IllegalArgumentException("Nicht genügend Guthaben");
         }
 
-        Bets saved = betsRepository.save(bet);
-
-        user.setBalance(user.getBalance() - saved.getBetAmount());
-        user.getBets().add(saved.getId());
+        user.setBalance(user.getBalance() - bet.getBetAmount());
         userRepository.save(user);
 
-        return saved;
+        return betsRepository.save(bet);
     }
 }

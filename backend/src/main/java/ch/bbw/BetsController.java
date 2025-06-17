@@ -11,7 +11,6 @@ import java.util.*;
 @RequestMapping("api/bets")
 @CrossOrigin("*")
 public class BetsController {
-
     @Autowired
     private BetService betService;
 

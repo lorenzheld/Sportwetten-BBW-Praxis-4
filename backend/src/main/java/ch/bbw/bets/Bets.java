@@ -1,4 +1,5 @@
 package ch.bbw.bets;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,22 +11,24 @@ import java.util.UUID;
 @Entity
 @Table(name="bets")
 public class Bets {
+    @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "id", updatable = false, nullable = false)
-    @Id
     private UUID id;
-    Long gameId;
-    UUID userId;
-    int betAmount;
 
-    public Bets(Long gameId, UUID userId, int betAmount) {
+    private Long gameId;
+    private UUID userId;
+    private int betAmount;
+    private boolean homeBet;
+
+    public Bets(Long gameId, UUID userId, int betAmount, boolean homeBet) {
         this.gameId = gameId;
         this.userId = userId;
         this.betAmount = betAmount;
+        this.homeBet = homeBet;
     }
-
 }
