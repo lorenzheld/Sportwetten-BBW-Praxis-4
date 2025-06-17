@@ -20,14 +20,17 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getUsers();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getUser(@PathVariable UUID id) {
         return userService.getUser(id);
     }
+
     @PostMapping("/register")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         User user = userService.authenticate(

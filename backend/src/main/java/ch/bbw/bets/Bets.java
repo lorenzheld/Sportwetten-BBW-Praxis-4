@@ -18,12 +18,14 @@ public class Bets {
     @Column(name = "id", updatable = false, nullable = false)
     @Id
     private UUID id;
-    long gameId;
+    Long gameId;
     UUID userId;
+    int betAmount;
 
-    public Bets(UUID id, long gameId, UUID userId) {
-        this.id = id;
+    public Bets(Long gameId, UUID userId, int betAmount) {
         this.gameId = gameId;
         this.userId = userId;
+        this.betAmount = betAmount;
     }
+
 }
