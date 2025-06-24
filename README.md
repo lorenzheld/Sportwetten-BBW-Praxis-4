@@ -73,7 +73,7 @@ Dieses Projekt richtet sich an:
 - 🔄 Erweiterte Wettoptionen
 
 ## 👥 Team
-Entwickelt von Lrenz Held, Andrin Renggli und Rafael Salinger im Rahmen der BBW-Praxis-Ausbildung.
+Entwickelt von Lorenz Held, Andrin Renggli und Rafael Salinger im Rahmen der BBW-Praxis-Ausbildung.
 
 ---
 *Dies ist ein Bildungsprojekt. Alle Wetten erfolgen mit virtuellem Guthaben.*
