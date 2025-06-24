@@ -23,7 +23,7 @@ Die Idee dieses Projektes ist eine Web-Applikation für Sportwetten zu erstellen
 - Einfache Ergebniswetten (Sieg, Unentschieden, Niederlage)
 - Live-Quoten basierend auf Sports API
 
-![image](https://github.com/user-attachments/assets/720fb20f-8c56-4873-ac7d-d20a10f58007)
+![{9BDAEC3C-C5DF-420C-8AF4-94EE9F778C0A}](https://github.com/user-attachments/assets/c285a9f9-7467-4577-bb7c-f6b68ad94fd3)
 
 ### Benutzeroberfläche
 - **Neue Wette**: Übersichtliche Darstellung verfügbarer Spiele mit aktuellen Quoten
