@@ -14,12 +14,12 @@ Die Idee dieses Projektes ist eine Web-Applikation für Sportwetten zu erstellen
 ### Hauptfunktionen
 - **Benutzerregistrierung und -anmeldung**
 - **Virtuelles Wettkonto** mit Startguthaben (500 Coins)
-- **Live-Sportwetten** auf aktuelle Fußballspiele
+- **Live-Sportwetten** auf aktuelle Fussballspiele
 - **Rangliste** zum Vergleich mit anderen Nutzern
 - **Benutzerprofile** mit personalisierten Einstellungen
 
 ### Wettmöglichkeiten
-- Wetten auf Fußballspiele verschiedener Ligen
+- Wetten auf Fussballspiele verschiedener Ligen
 - Einfache Ergebniswetten (Sieg, Unentschieden, Niederlage)
 - Live-Quoten basierend auf Sports API
 
