@@ -54,19 +54,10 @@ export default function NewBet() {
             .toISOString()
             .slice(0, 10);
 
-        const url =
-            `https://api.football-data.org/v4/matches?dateFrom=${isoFrom}&dateTo=${isoTo}`;
+        const url = `/api/matches?dateFrom=${isoFrom}&dateTo=${isoTo}`;
 
-        setLoading(true);
-        setError(null);
-        setMatches([]);
         try {
-            const res = await fetch(url, {
-                headers: {
-                    "X-Auth-Token": import.meta.env.VITE_FD_API_KEY,
-                    Accept: "application/json",
-                },
-            });
+            const res = await fetch(url);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             setMatches(data.matches ?? []);
