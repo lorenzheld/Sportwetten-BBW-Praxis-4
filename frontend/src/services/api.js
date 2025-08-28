@@ -37,7 +37,7 @@ export const api = {
   },
 
   createUser: async (formData) => {
-    const response = await fetch(`${API_URL}/api/users`, {
+    const response = await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
