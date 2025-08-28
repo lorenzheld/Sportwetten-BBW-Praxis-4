@@ -3,18 +3,39 @@ import '@material/web/button/filled-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/divider/divider.js';
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { api } from '../services/api';
 
 export default function Account() {
-    const user = {
-        username: 'Lorenz35',
-        balance: 500,
-        email: 'lolo@example.com',
-    };
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Angenommen, die User-ID ist im localStorage gespeichert
+                const userId = localStorage.getItem('userId');
+                const userData = await api.getUser(userId);
+                setUser(userData);
+            } catch (err) {
+                setError('Fehler beim Laden der Benutzerdaten');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    if (loading) return <div>Lade...</div>;
+    if (error) return <div>{error}</div>;
+    if (!user) return <div>Kein Benutzer gefunden</div>;
 
     return (
         <div style={styles.container}>
             <h2 style={styles.heading}>Mein Konto</h2>
-
             <section style={styles.infoBox}>
                 <table style={styles.table}>
                     <tbody>
@@ -24,23 +45,12 @@ export default function Account() {
                         <td style={styles.value}>{user.username}</td>
                     </tr>
                     <tr>
-                        <td style={styles.iconCell}><md-icon>email</md-icon></td>
-                        <td style={styles.label}>E-Mail:</td>
-                        <td style={styles.value}>{user.email}</td>
-                    </tr>
-                    <tr>
                         <td style={styles.iconCell}><md-icon>attach_money</md-icon></td>
                         <td style={styles.label}>Kontostand:</td>
-                        <td style={styles.value}>{user.balance} Coins</td>
+                        <td style={styles.value}>{user.balance}</td>
                     </tr>
                     </tbody>
                 </table>
-
-                <md-divider></md-divider>
-
-                <md-filled-button style={{ marginTop: '1rem' }}>
-                    Einstellungen öffnen
-                </md-filled-button>
             </section>
         </div>
     );

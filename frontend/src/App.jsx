@@ -8,6 +8,7 @@ import NewBet from './components/NewBet.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
 import MyBets from './components/MyBets.jsx';
 import Account from './components/Account.jsx';
+import Register from './components/Register.jsx';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/mybets" element={<MyBets />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/register" element={<Register/>} />
           </Routes>
         </div>
       </Router>

@@ -34,5 +34,19 @@ export const api = {
   async getUser(userId) {
     const response = await fetch(`${API_URL}/api/users/${userId}`);
     return response.json();
+  },
+
+  createUser: async (formData) => {
+    const response = await fetch(`${API_URL}/api/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    if (!response.ok) {
+      throw new Error('Registrierung fehlgeschlagen');
+    }
+    return response.json();
   }
 };
