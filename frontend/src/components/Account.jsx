@@ -1,4 +1,3 @@
-// components/Account.jsx
 import '@material/web/button/filled-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/divider/divider.js';
@@ -14,7 +13,6 @@ export default function Account() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                // Angenommen, die User-ID ist im localStorage gespeichert
                 const userId = localStorage.getItem('userId');
                 const userData = await api.getUser(userId);
                 setUser(userData);

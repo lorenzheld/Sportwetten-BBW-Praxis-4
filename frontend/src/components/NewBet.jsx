@@ -9,7 +9,7 @@ import "@material/web/textfield/filled-text-field.js";
  * Komponente "Neue Wette" – Datumseingabe, Laden & Wett-Button pro Match
  * ----------------------------------------------------------------------
  * Eingabeformat im Textfeld:
- *   • „TT.MM“  (z. B. 26.05  → aktuelles Jahr)
+ *   • „TT.MM“  (z.B. 26.05  → aktuelles Jahr)
  *   • „YYYY-MM-DD“ (ISO)
  *
  * Beim Laden wird der gewählte Tag **plus Folgetag** geholt.
@@ -71,9 +71,11 @@ export default function NewBet() {
     // Handler für Wett-Button
     const handleBet = (match) => {
         console.log(
-            `🔔 Wette angeklickt: ${match.homeTeam.shortName} vs ${match.awayTeam.shortName} (ID ${match.id})`
+            `🔔Wette angeklickt: ${match.homeTeam.shortName} vs ${match.awayTeam.shortName} (ID ${match.id})`
         );
-        // TODO: mit Router auf Detailseite navigieren, z. B. navigate(`/bet/${match.id}`)
+        // TODO: mit Router auf Detailseite navigieren, z.B. navigate(`/bet/${match.id}`)
+        localStorage.setItem('matchId', match.id);
+        window.location.href = `/betinfo`;
     };
 
     // sortiert
@@ -148,7 +150,7 @@ export default function NewBet() {
                                 {/* Status */}
                                 <md-filled-button
                                     disabled={statusLabel(m) !== "LIVE"}
-                                    style={{ pointerEvents: "none", width: 68 }}
+                                    style={{ pointerEvents: "none", width: 100, height: 40 }}
                                 >
                                     {statusLabel(m)}
                                 </md-filled-button>
@@ -181,11 +183,11 @@ export default function NewBet() {
 
                                 {/* Wett-Button */}
                                 <md-filled-icon-button
-                                    style={{ marginLeft: 8 }}
+                                    style={{ marginLeft: 8 , width: 100, height: 40}}
                                     aria-label="Wetten"
                                     title="Auf dieses Spiel wetten"
                                     onClick={() => handleBet(m)}
-                                >
+                                >   Wetten
                                     <md-icon slot="icon">payments</md-icon>
                                 </md-filled-icon-button>
                             </div>

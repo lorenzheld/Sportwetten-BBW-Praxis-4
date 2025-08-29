@@ -9,6 +9,7 @@ import Leaderboard from './components/Leaderboard.jsx';
 import MyBets from './components/MyBets.jsx';
 import Account from './components/Account.jsx';
 import Register from './components/Register.jsx';
+import BetInfo from "./components/BetInfo.jsx";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="/mybets" element={<MyBets />} />
             <Route path="/account" element={<Account />} />
             <Route path="/register" element={<Register/>} />
+            <Route path={"/betinfo"} element={<BetInfo/>} />
           </Routes>
         </div>
       </Router>
